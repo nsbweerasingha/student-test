@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: studentdb
+      MYSQL_DATABASE: student_db
       MYSQL_USER: student
       MYSQL_PASSWORD: student123
     ports:
@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/studentdb
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/student_db
       SPRING_DATASOURCE_USERNAME: student
       SPRING_DATASOURCE_PASSWORD: student123
     ports:
