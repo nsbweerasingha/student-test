@@ -1,13 +1,18 @@
-# Stage 1: Build the application
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+# Use official Maven image to build the app
+FROM maven:3.9.9-eclipse-temurin-17 AS builder
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY . .
 RUN mvn clean package -DskipTests
 
-# Stage 2: Run the application
-FROM eclipse-temurin:17-jre
+# Use JDK image to run the app
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+# Copy jar from builder stage
+COPY --from=builder /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose application port
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Run application
+ENTRYPOINT ["java","-jar","app.jar"]
